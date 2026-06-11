@@ -1,0 +1,416 @@
+/* ════════════════════════════════════════════
+   COMPANIES PAGE  —  accent #7C3AED (violet)
+   ════════════════════════════════════════════ */
+
+.cmp-root {
+  padding: 24px 28px 48px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1E293B;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Page Header ── */
+.cmp-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.cmp-page-header-title {
+  font-size: 23px;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.4px;
+  margin: 0 0 4px;
+}
+.cmp-page-header-meta { font-size: 13px; color: #94A3B8; margin: 0; }
+.cmp-meta-active { color: #7C3AED; font-weight: 600; }
+
+.cmp-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 9px;
+  border: none;
+  background: #7C3AED;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.28);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.cmp-add-btn:hover {
+  background: #6D28D9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(124,58,237,0.36);
+}
+
+/* ── Stat Cards ── */
+.cmp-stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+@media (max-width: 1100px) { .cmp-stats { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px)  { .cmp-stats { grid-template-columns: repeat(2, 1fr); } }
+
+.cmp-stat-card {
+  background: #fff;
+  border: 1px solid #E8ECF3;
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+.cmp-stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); transform: translateY(-2px); }
+.cmp-stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cmp-stat-value { font-size: 24px; font-weight: 800; line-height: 1.1; letter-spacing: -0.5px; }
+.cmp-stat-label { font-size: 11.5px; color: #64748B; margin-top: 2px; }
+
+/* ── Toolbar ── */
+.cmp-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.cmp-toolbar-l { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex: 1; }
+
+.cmp-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.cmp-search-wrap > svg { position: absolute; left: 11px; pointer-events: none; }
+.cmp-search {
+  height: 36px;
+  padding: 0 34px 0 32px;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+  background: #fff;
+  font-size: 13px;
+  color: #1E293B;
+  width: 280px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.cmp-search::placeholder { color: #94A3B8; }
+.cmp-search:focus { border-color: #7C3AED; box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
+.cmp-search-clear {
+  position: absolute; right: 8px; background: none; border: none;
+  padding: 3px; cursor: pointer; color: #94A3B8;
+  display: flex; border-radius: 50%; transition: color 0.12s, background 0.12s;
+}
+.cmp-search-clear:hover { color: #475569; background: #F1F5F9; }
+
+.cmp-filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #F1F5F9;
+  border-radius: 8px;
+  padding: 3px;
+}
+.cmp-ftab {
+  height: 30px; padding: 0 12px; border-radius: 6px; border: none;
+  background: transparent; font-size: 12.5px; font-weight: 500;
+  color: #64748B; cursor: pointer; display: flex; align-items: center;
+  gap: 5px; transition: all 0.15s; white-space: nowrap;
+}
+.cmp-ftab:hover { background: #fff; color: #1E293B; }
+.cmp-ftab.active { background: #fff; color: #1E293B; box-shadow: 0 1px 4px rgba(0,0,0,0.08); font-weight: 600; }
+.cmp-ftab-count {
+  background: #E2E8F0; color: #64748B; border-radius: 10px;
+  padding: 0 6px; font-size: 11px; font-weight: 600;
+  min-width: 18px; text-align: center; line-height: 18px;
+}
+.cmp-ftab.active .cmp-ftab-count { background: #7C3AED; color: #fff; }
+.cmp-count-label { font-size: 12.5px; color: #64748B; white-space: nowrap; }
+
+/* ── Table ── */
+.cmp-table-wrap {
+  background: #fff;
+  border: 1px solid #E8ECF3;
+  border-radius: 12px;
+  overflow: hidden;
+  overflow-x: auto;
+}
+.cmp-table { width: 100%; border-collapse: collapse; min-width: 900px; }
+.cmp-table thead tr { border-bottom: 1px solid #F1F5F9; }
+.cmp-table th {
+  padding: 11px 14px; font-size: 11px; font-weight: 700;
+  color: #94A3B8; letter-spacing: 0.6px; text-align: left;
+  background: #FAFBFC; white-space: nowrap;
+}
+.cmp-th-actions { text-align: center; }
+.cmp-table td {
+  padding: 13px 14px; font-size: 13px; color: #334155;
+  border-bottom: 1px solid #F8FAFC; vertical-align: middle;
+}
+.cmp-tr { transition: background 0.12s; }
+.cmp-tr:last-child td { border-bottom: none; }
+.cmp-tr:hover td { background: #FAFAFF; }
+
+/* Company name cell */
+.cmp-company-cell { display: flex; align-items: center; gap: 11px; min-width: 180px; }
+.cmp-avatar {
+  border-radius: 10px; color: #fff; display: inline-flex;
+  align-items: center; justify-content: center; font-weight: 800;
+  flex-shrink: 0; letter-spacing: -0.3px;
+}
+.cmp-company-name { font-size: 13.5px; font-weight: 700; color: #0F172A; white-space: nowrap; }
+.cmp-company-loc {
+  display: flex; align-items: center; gap: 3px;
+  font-size: 11.5px; color: #94A3B8; margin-top: 1px;
+}
+
+/* Badges */
+.cmp-status-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  white-space: nowrap;
+}
+.cmp-status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+.cmp-industry-tag {
+  display: inline-block; font-size: 11.5px; font-weight: 600;
+  padding: 3px 9px; border-radius: 20px; white-space: nowrap;
+}
+
+.cmp-sector-tag {
+  display: inline-block; font-size: 11.5px; font-weight: 500;
+  padding: 3px 9px; border-radius: 20px; white-space: nowrap;
+  background: #F1F5F9; color: #475569;
+}
+
+/* Star rating */
+.cmp-rating {
+  display: inline-flex; align-items: center; gap: 5px;
+}
+.cmp-rating-val { font-size: 13.5px; font-weight: 700; color: #0F172A; }
+
+/* Review count */
+.cmp-review-count {
+  font-size: 13px; font-weight: 600; color: #475569;
+}
+
+/* MCA badge */
+.cmp-mca {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; font-weight: 600; padding: 3px 9px;
+  border-radius: 20px; white-space: nowrap;
+}
+.cmp-mca-yes { background: #F0FDF4; color: #15803D; }
+.cmp-mca-no  { background: #FEF2F2; color: #DC2626; }
+
+/* Row actions */
+.cmp-row-actions { display: flex; align-items: center; gap: 6px; justify-content: center; }
+.cmp-icon-btn {
+  width: 28px; height: 28px; border-radius: 6px; border: 1px solid #E2E8F0;
+  background: #fff; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; transition: all 0.15s; color: #64748B; flex-shrink: 0;
+}
+.cmp-edit-btn:hover { border-color: #3B82F6; color: #3B82F6; background: #EFF6FF; }
+.cmp-del-btn:hover  { border-color: #EF4444; color: #EF4444; background: #FEF2F2; }
+
+/* Empty */
+.cmp-empty-row { padding: 0 !important; }
+.cmp-empty { display: flex; flex-direction: column; align-items: center; padding: 52px 24px; gap: 12px; color: #94A3B8; }
+.cmp-empty p { font-size: 14px; color: #64748B; margin: 0; }
+
+/* ── Overlay ── */
+.cmp-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.1); backdrop-filter: blur(2px); }
+.cmp-overlay-dark { background: rgba(0,0,0,0.42); backdrop-filter: blur(4px); }
+
+/* ── Delete Confirm Modal ── */
+.cmp-confirm-modal {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  z-index: 220; background: #fff; border-radius: 16px;
+  padding: 28px 26px; width: 380px; max-width: calc(100vw - 32px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  animation: cmp-pop 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes cmp-pop {
+  from { transform: translate(-50%,-50%) scale(0.88); opacity: 0; }
+  to   { transform: translate(-50%,-50%) scale(1);    opacity: 1; }
+}
+.cmp-confirm-icon {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: #FEF2F2; display: flex; align-items: center; justify-content: center;
+}
+.cmp-confirm-title { font-size: 17px; font-weight: 800; color: #1E293B; }
+.cmp-confirm-sub   { font-size: 13px; color: #64748B; text-align: center; line-height: 1.5; }
+.cmp-confirm-actions { display: flex; gap: 10px; margin-top: 6px; width: 100%; }
+.cmp-confirm-cancel {
+  flex: 1; height: 40px; border-radius: 9px; border: 1px solid #E2E8F0;
+  background: #fff; color: #475569; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.cmp-confirm-cancel:hover { background: #F1F5F9; }
+.cmp-confirm-delete {
+  flex: 1; height: 40px; border-radius: 9px; border: none;
+  background: #EF4444; color: #fff; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.cmp-confirm-delete:hover { background: #DC2626; }
+
+/* ── Add / Edit Modal ── */
+.cmp-modal {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  z-index: 220; background: #fff; border-radius: 16px;
+  width: 680px; max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 48px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+  display: flex; flex-direction: column;
+  animation: cmp-pop 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+.cmp-modal-hd {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 20px 22px 16px; border-bottom: 1px solid #F1F5F9; flex-shrink: 0;
+  gap: 12px;
+}
+.cmp-modal-title { font-size: 16px; font-weight: 800; color: #1E293B; margin-bottom: 3px; }
+.cmp-modal-sub   { font-size: 12.5px; color: #94A3B8; }
+.cmp-modal-close {
+  width: 30px; height: 30px; border-radius: 7px; border: 1px solid #E2E8F0;
+  background: #fff; color: #64748B; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  transition: all 0.15s;
+}
+.cmp-modal-close:hover { background: #F1F5F9; color: #1E293B; }
+.cmp-modal-body {
+  flex: 1; overflow-y: auto; padding: 18px 22px;
+  scrollbar-width: thin; scrollbar-color: #CBD5E1 transparent;
+}
+.cmp-modal-ft {
+  display: flex; gap: 10px; padding: 14px 22px;
+  border-top: 1px solid #F1F5F9; flex-shrink: 0; justify-content: flex-end;
+}
+.cmp-modal-cancel {
+  padding: 9px 20px; border-radius: 9px; border: 1px solid #E2E8F0;
+  background: #fff; color: #475569; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  transition: background 0.15s;
+}
+.cmp-modal-cancel:hover { background: #F1F5F9; }
+.cmp-modal-save {
+  padding: 9px 22px; border-radius: 9px; border: none;
+  background: #7C3AED; color: #fff; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.25);
+  transition: background 0.15s;
+}
+.cmp-modal-save:hover { background: #6D28D9; }
+
+/* Modal form */
+.cmp-mf-section-label {
+  font-size: 10.5px; font-weight: 700; color: #94A3B8;
+  text-transform: uppercase; letter-spacing: 0.7px;
+  margin: 18px 0 10px; padding-bottom: 6px;
+  border-bottom: 1px solid #F1F5F9;
+}
+.cmp-mf-section-label:first-child { margin-top: 0; }
+.cmp-mf-row  { display: flex; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; }
+.cmp-mf-group { display: flex; flex-direction: column; gap: 5px; flex: 1; }
+.cmp-mf-half  { flex: 1; min-width: 200px; }
+.cmp-mf-third { flex: 1; min-width: 140px; }
+.cmp-mf-label { font-size: 12.5px; font-weight: 600; color: #374151; }
+.cmp-req { color: #EF4444; }
+.cmp-mf-input {
+  height: 36px; padding: 0 11px; border-radius: 8px; border: 1px solid #E2E8F0;
+  background: #fff; font-size: 13px; color: #1E293B; outline: none;
+  transition: border-color 0.15s; width: 100%; box-sizing: border-box;
+}
+.cmp-mf-input:focus { border-color: #7C3AED; box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
+.cmp-mf-textarea {
+  padding: 9px 11px; border-radius: 8px; border: 1px solid #E2E8F0;
+  background: #fff; font-size: 13px; color: #1E293B; outline: none;
+  resize: vertical; line-height: 1.5; font-family: inherit;
+  transition: border-color 0.15s; width: 100%; box-sizing: border-box;
+}
+.cmp-mf-textarea:focus { border-color: #7C3AED; box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
+
+/* MCA toggle */
+.cmp-toggle-btn {
+  height: 36px; padding: 0 14px; border-radius: 8px;
+  border: 1.5px solid #E2E8F0; background: #F8FAFC;
+  font-size: 13px; font-weight: 600; color: #94A3B8; cursor: pointer;
+  transition: all 0.15s; white-space: nowrap; width: 100%;
+  text-align: left;
+}
+.cmp-toggle-btn.on { background: #F0FDF4; border-color: #86EFAC; color: #15803D; }
+
+/* ── Logo Upload ── */
+.cmp-logo-upload-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #FAFBFF;
+  border: 1.5px dashed #C4B5FD;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.cmp-logo-upload-circle {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  border: 2px solid #DDD6FE;
+  background: #F5F3FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.15s;
+}
+.cmp-logo-upload-circle:hover { border-color: #7C3AED; }
+.cmp-logo-upload-circle:hover .cmp-logo-camera-overlay { opacity: 1; }
+.cmp-logo-preview-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cmp-logo-placeholder {
+  font-size: 22px;
+  font-weight: 800;
+  color: #7C3AED;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cmp-logo-camera-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.18s;
+}
+.cmp-logo-upload-hint { display: flex; flex-direction: column; gap: 3px; }
+.cmp-logo-upload-label { font-size: 13.5px; font-weight: 700; color: #374151; }
+.cmp-logo-upload-sub { font-size: 12px; color: #9CA3AF; }
+.cmp-file-input { display: none; }
+
+/* ── Avatar image variant ── */
+.cmp-avatar-img { object-fit: cover; border-radius: 8px; display: block; }

@@ -13,6 +13,7 @@ interface Tab {
   href: string
   label: string
   icon: React.ReactNode
+  siteAdminOnly?: boolean
 }
 
 const tabs: Tab[] = [
@@ -77,13 +78,36 @@ const tabs: Tab[] = [
     ),
   },
   {
-    href: '/panel', label: 'Panel',
+    href: '/panel', label: 'Panel', siteAdminOnly: true,
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
         <circle cx="9" cy="7" r="3" fill="#F43F5E" opacity="0.9"/>
         <circle cx="17" cy="7" r="2.5" fill="#F43F5E" opacity="0.65"/>
         <path d="M2 20a7 7 0 0 1 14 0" fill="#F43F5E" opacity="0.9"/>
         <path d="M17 14c2.7 0 5 1.5 5 3.5V20h-4.5" fill="#F43F5E" opacity="0.55"/>
+      </svg>
+    ),
+  },
+  {
+    href: '/clients', label: 'Clients',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <rect x="2" y="7" width="20" height="14" rx="2" fill="#0EA5E9" opacity="0.15"/>
+        <rect x="2" y="7" width="20" height="14" rx="2" stroke="#0EA5E9" strokeWidth="1.6"/>
+        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="#0EA5E9" strokeWidth="1.6"/>
+        <line x1="12" y1="12" x2="12" y2="16" stroke="#0EA5E9" strokeWidth="1.6"/>
+        <line x1="10" y1="14" x2="14" y2="14" stroke="#0EA5E9" strokeWidth="1.6"/>
+      </svg>
+    ),
+  },
+  {
+    href: '/users', label: 'Users', siteAdminOnly: true,
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <circle cx="9" cy="7" r="3" fill="#8B5CF6" opacity="0.9"/>
+        <circle cx="17" cy="7" r="2.5" fill="#8B5CF6" opacity="0.65"/>
+        <path d="M2 20a7 7 0 0 1 14 0" fill="#8B5CF6" opacity="0.9"/>
+        <path d="M17 14c2.7 0 5 1.5 5 3.5V20h-4.5" fill="#8B5CF6" opacity="0.55"/>
       </svg>
     ),
   },
@@ -312,6 +336,10 @@ function ProfileMenu() {
 
 export default function Navbar() {
   const pathname = usePathname()
+  const { user } = useCurrentUser()
+  const isSiteAdmin = user?.role === 'Site Admin'
+
+  const visibleTabs = tabs.filter(tab => !tab.siteAdminOnly || isSiteAdmin)
 
   return (
     <header className="app-navbar">
@@ -320,7 +348,7 @@ export default function Navbar() {
       </div>
 
       <nav className="app-tabs">
-        {tabs.map(tab => (
+        {visibleTabs.map(tab => (
           <Link
             key={tab.href}
             href={tab.href}

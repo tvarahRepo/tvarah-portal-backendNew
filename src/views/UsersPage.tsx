@@ -7,11 +7,20 @@ import './UsersPage.css'
 // ── Config ────────────────────────────────────────────────────────────────────
 
 const ROLE_CFG = {
-  'Admin': { bg: '#FEF3C7', text: '#92400E', dot: '#F59E0B' },
-  'Recruiter': { bg: '#EEF2FF', text: '#4338CA', dot: '#6366F1' },
-  'HR Manager': { bg: '#F0FDF4', text: '#166534', dot: '#22C55E' },
-  'Interviewer': { bg: '#F0FDFA', text: '#0F766E', dot: '#14B8A6' },
-  'Viewer': { bg: '#F1F5F9', text: '#475569', dot: '#94A3B8' },
+  // Internal
+  'Site Admin':            { bg: '#EDE9FE', text: '#5B21B6', dot: '#7C3AED' },
+  'Admin':                 { bg: '#FEF3C7', text: '#92400E', dot: '#F59E0B' },
+  'Management':            { bg: '#F5F3FF', text: '#5B21B6', dot: '#7C3AED' },
+  'Account Manager':       { bg: '#EEF2FF', text: '#4338CA', dot: '#6366F1' },
+  'Recruiter':             { bg: '#EFF6FF', text: '#1D4ED8', dot: '#3B82F6' },
+  'Panel':                 { bg: '#F0FDFA', text: '#0F766E', dot: '#14B8A6' },
+  'Sales and BD':          { bg: '#F0FDF4', text: '#166534', dot: '#22C55E' },
+  'Candidate':             { bg: '#F1F5F9', text: '#475569', dot: '#94A3B8' },
+  // External / Client
+  'Client-TA Head':        { bg: '#FFF1F2', text: '#9F1239', dot: '#F43F5E' },
+  'Client-TA Associate':   { bg: '#FDF2F8', text: '#9D174D', dot: '#EC4899' },
+  'Client-Hiring Manager': { bg: '#FFF7ED', text: '#C2410C', dot: '#F97316' },
+  'Client-Director':       { bg: '#FEF2F2', text: '#B91C1C', dot: '#EF4444' },
 }
 
 const STATUS_CFG = {

@@ -385,13 +385,15 @@ export default function Dashboard() {
   const router = useRouter()
   const { user, initials, fullName, avatarSrc, setUser } = useCurrentUser()
   const [avatarImgErr, setAvatarImgErr] = useState(false)
-  const isAdmin = user?.role === 'Admin'
+  const isSiteAdmin = user?.role === 'Site Admin'
+  const canSeeClients = user?.role === 'Admin' || user?.role === 'Site Admin'
 
   useEffect(() => { setAvatarImgErr(false) }, [avatarSrc])
 
   useEffect(() => {
-    if (activeNav === 'Users' && user && !isAdmin) setActiveNav('Dashboard')
-  }, [activeNav, user, isAdmin])
+    if (user && !isSiteAdmin && activeNav === 'Users') setActiveNav('Dashboard')
+    if (user && !canSeeClients && activeNav === 'Clients') setActiveNav('Dashboard')
+  }, [activeNav, user, isSiteAdmin, canSeeClients])
 
   const handleSignOut = useCallback(async () => {
     setSigningOut(true)
@@ -569,7 +571,11 @@ export default function Dashboard() {
         <nav className="db-nav">
           {!collapsed && <div className="db-section-hd">Overview</div>}
           {collapsed && <div className="db-section-sep" />}
-          {OVERVIEW_NAV.filter(item => item.id !== 'Users' || isAdmin).map(item => (
+          {OVERVIEW_NAV.filter(item => {
+            if (item.id === 'Users') return isSiteAdmin
+            if (item.id === 'Clients') return canSeeClients
+            return true
+          }).map(item => (
             <NavItem key={item.id} {...item} label={item.id} isActive={activeNav === item.id} onClick={() => handleNavClick(item.id)} />
           ))}
 
@@ -676,11 +682,11 @@ export default function Dashboard() {
             <div className="db-component-wrap"><TaskPage /></div>
           )}
 
-          {activeNav === 'Clients' && (
+          {activeNav === 'Clients' && canSeeClients && (
             <div className="db-component-wrap"><ClientsPage onClientSelect={setSelectedClientName} resetKey={clientsResetKey} /></div>
           )}
 
-          {activeNav === 'Users' && isAdmin && (
+          {activeNav === 'Users' && isSiteAdmin && (
             <div className="db-component-wrap"><UsersPage /></div>
           )}
 

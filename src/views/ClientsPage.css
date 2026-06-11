@@ -1398,3 +1398,16 @@ a.clt-meta-contact-chip:hover { text-decoration: underline; }
   .clt-jobs-table th:nth-child(10),
   .clt-jobs-table td:nth-child(10) { display: none; }
 }
+
+.clt-loader {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #E5E7EB;
+  border-top-color: #4F46E5;
+  border-radius: 50%;
+  animation: clt-spin 0.7s linear infinite;
+}
+
+@keyframes clt-spin {
+  to { transform: rotate(360deg); }
+}

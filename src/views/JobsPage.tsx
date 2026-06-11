@@ -42,194 +42,59 @@ const COMPANY_COLORS = {
   'Meesho':                    '#F43397',
 }
 
-// ── Seed Data ─────────────────────────────────────────────────────────────────
+// ── API → UI shape ────────────────────────────────────────────────────────────
 
-const SEED_JOBS = [
-  {
-    id: 'JD-00001', company: 'Google India',
-    designation: 'Senior Backend Engineer',
-    experience: '5–8 years', type: 'Full-Time', mode: 'Hybrid',
-    openings: 2, filled: 0, status: 'Open', priority: 'Urgent',
-    qualityScore: 52,
-    skills: ['Go', 'Kubernetes', 'gRPC', 'PostgreSQL', 'Redis'],
-    goodSkills: ['Docker', 'AWS', 'Testing'],
-    targetTypes: ['Product', 'SaaS', 'FinTech'],
-    rules: ['Min 5 yrs Go experience', 'Must have managed production systems at scale', 'No job-hoppers (< 1yr stays)'],
-    location: 'Bengaluru', department: 'Engineering',
-    salary: '₹40–55 LPA',
-    pipeline: { applied: 34, shortlisted: 12, offered: 2 },
-    posted: '2026-04-05', deadline: '2026-06-30',
-    description: 'We are looking for a Senior Backend Engineer to build and scale high-throughput distributed systems for Google India\'s core infrastructure team. You will design, develop, and maintain critical services handling millions of requests per second. The ideal candidate brings deep expertise in Go, strong fundamentals in distributed systems, and experience operating services on Kubernetes at scale. You will collaborate closely with SREs and product teams to define reliability targets, drive performance improvements, and contribute to architecture decisions. Strong communication skills and a bias for writing clean, well-tested code are essential.',
-    accountManager: 'Rahul Verma',
-  },
-  {
-    id: 'JD-00002', company: 'Google India',
-    designation: 'ML Engineer',
-    experience: '4–6 years', type: 'Full-Time', mode: 'On-Site',
-    openings: 2, filled: 1, status: 'Partially Filled', priority: 'High',
-    qualityScore: 38,
-    skills: ['Python', 'TensorFlow', 'PyTorch', 'MLflow', 'BigQuery'],
-    location: 'Bengaluru', department: 'AI/ML',
-    salary: '₹45–60 LPA',
-    pipeline: { applied: 28, shortlisted: 9, offered: 1 },
-    posted: '2026-04-05', deadline: '2026-05-31',
-    description: 'We are hiring an ML Engineer to design, train, and deploy machine learning models that power Google India\'s recommendation and search systems. You will work on the full ML lifecycle — from data exploration and feature engineering to model evaluation, deployment, and monitoring. Proficiency with TensorFlow or PyTorch is required, and experience with BigQuery and MLflow pipelines is a strong advantage. You will partner with data scientists, product managers, and software engineers to translate business problems into scalable ML solutions that serve hundreds of millions of users.',
-    accountManager: 'Rahul Verma',
-  },
-  {
-    id: 'JD-00003', company: 'Tata Consultancy Services',
-    designation: 'Java Developer',
-    experience: '3–5 years', type: 'Full-Time', mode: 'On-Site',
-    openings: 5, filled: 2, status: 'Partially Filled', priority: 'High',
-    qualityScore: 28,
-    skills: ['Java', 'Spring Boot', 'Microservices', 'Oracle DB', 'Docker'],
-    location: 'Mumbai', department: 'Engineering',
-    salary: '₹12–18 LPA',
-    pipeline: { applied: 62, shortlisted: 18, offered: 4 },
-    posted: '2026-04-10', deadline: '2026-07-15',
-    description: 'TCS is looking for a Java Developer to build and maintain enterprise-grade microservices for our banking and financial services clients. You will work in agile squads delivering robust REST APIs using Spring Boot, with deployment on Docker and Kubernetes. Strong understanding of Oracle DB and hands-on experience with CI/CD pipelines are required. The role involves close coordination with onshore architects and client stakeholders, so good communication skills and the ability to deliver under timelines are critical.',
-    accountManager: 'Sam Lee',
-  },
-  {
-    id: 'JD-00004', company: 'Tata Consultancy Services',
-    designation: 'Cloud Architect',
-    experience: '8+ years', type: 'Full-Time', mode: 'Hybrid',
-    openings: 5, filled: 5, status: 'Open', priority: 'Urgent',
-    qualityScore: 55,
-    skills: ['AWS', 'Azure', 'Terraform', 'Kubernetes', 'DevSecOps'],
-    location: 'Hyderabad', department: 'Cloud & Infra',
-    salary: '₹35–48 LPA',
-    pipeline: { applied: 19, shortlisted: 6, offered: 0 },
-    posted: '2026-04-12', deadline: '2026-06-12',
-    description: 'We are seeking a Cloud Architect to design and deliver cloud transformation solutions for Fortune 500 enterprise clients across AWS and Azure. You will lead technical solutioning workshops, define infrastructure-as-code standards using Terraform, and ensure security and compliance across multi-cloud environments. Experience with DevSecOps practices and Kubernetes orchestration is mandatory. You will mentor junior engineers and act as the primary technical point of contact for client engagements, translating complex requirements into actionable architecture blueprints.',
-    accountManager: 'Sam Lee',
-  },
-  {
-    id: 'JD-00005', company: 'Amazon',
-    designation: 'SDE II',
-    experience: '4–8 years', type: 'Full-Time', mode: 'On-Site',
-    openings: 4, filled: 0, status: 'Partially Filled', priority: 'High',
-    qualityScore: 41,
-    skills: ['Java', 'Distributed Systems', 'AWS', 'DynamoDB', 'React'],
-    location: 'Hyderabad', department: 'Engineering',
-    salary: '₹35–50 LPA',
-    pipeline: { applied: 47, shortlisted: 15, offered: 3 },
-    posted: '2026-04-08', deadline: '2026-06-08',
-    description: 'Amazon is hiring an SDE II to build and own features on the Seller Experience platform serving millions of third-party sellers globally. You will design scalable distributed services using Java, DynamoDB, and AWS, and contribute to both backend APIs and React-based seller dashboards. The ideal candidate has a strong grasp of system design, writes high-quality, testable code, and thrives in a fast-paced environment. You are expected to take ownership of features end-to-end — from design doc to production deployment and on-call support.',
-    accountManager: 'Vikram Singh',
-  },
-  {
-    id: 'JD-00006', company: 'Amazon',
-    designation: 'Data Engineer',
-    experience: '3–6 years', type: 'Full-Time', mode: 'Hybrid',
-    openings: 2, filled: 2, status: 'Open', priority: 'Medium',
-    qualityScore: 33,
-    skills: ['Python', 'Spark', 'Redshift', 'Airflow', 'SQL'],
-    location: 'Bengaluru', department: 'Data',
-    salary: '₹25–38 LPA',
-    pipeline: { applied: 31, shortlisted: 10, offered: 0 },
-    posted: '2026-04-15', deadline: '2026-07-01',
-    description: 'We are looking for a Data Engineer to design, build, and maintain large-scale data pipelines that power Amazon\'s business intelligence and analytics capabilities. You will work with Python, Apache Spark, and Airflow to ingest, transform, and serve petabyte-scale datasets into Redshift. Experience optimising SQL queries and working with streaming data is a plus. You will partner with data scientists and analysts across business units to understand data requirements and deliver reliable, well-documented pipelines with strong data quality guarantees.',
-    accountManager: 'Vikram Singh',
-  },
-  {
-    id: 'JD-00007', company: 'HDFC Bank',
-    designation: 'Risk Analyst',
-    experience: '3–5 years', type: 'Full-Time', mode: 'On-Site',
-    openings: 6, filled: 2, status: 'Closed', priority: 'Normal',
-    qualityScore: 47,
-    skills: ['Python', 'Risk Modelling', 'SAS', 'Excel', 'SQL'],
-    location: 'Mumbai', department: 'Risk Management',
-    salary: '₹14–20 LPA',
-    pipeline: { applied: 15, shortlisted: 5, offered: 2 },
-    posted: '2026-03-01', deadline: '2026-04-30',
-    description: 'HDFC Bank is looking for a Risk Analyst to develop and validate credit and market risk models for its retail lending portfolio. You will apply statistical techniques using Python and SAS to assess default probabilities, monitor model performance, and prepare regulatory reports. A solid understanding of RBI guidelines and Basel norms is preferred. You will work closely with the credit policy team and present risk findings to senior leadership, so strong analytical thinking and clear written communication are essential to this role.',
-    accountManager: 'Meera Nair',
-  },
-  {
-    id: 'JD-00008', company: 'Zomato',
-    designation: 'Product Manager – Growth',
-    experience: '4–6 years', type: 'Full-Time', mode: 'Hybrid',
-    openings: 3, filled: 1, status: 'Open', priority: 'High',
-    qualityScore: 31,
-    skills: ['Product Strategy', 'SQL', 'A/B Testing', 'Figma', 'Analytics'],
-    location: 'Gurugram', department: 'Product',
-    salary: '₹28–40 LPA',
-    pipeline: { applied: 22, shortlisted: 7, offered: 0 },
-    posted: '2026-04-18', deadline: '2026-06-30',
-    description: 'Zomato is looking for a Product Manager – Growth to own experimentation and growth strategy across its consumer app. You will define, prioritise, and ship features that drive user acquisition, retention, and order frequency. Proficiency in SQL and A/B testing frameworks is expected — you should be comfortable pulling your own data and making decisions grounded in metrics. You will work closely with engineering, design, and data science teams, manage a roadmap aligned to company OKRs, and communicate progress clearly to senior leadership.',
-    accountManager: 'Ananya Rao',
-  },
-  {
-    id: 'JD-00009', company: 'Zomato',
-    designation: 'Android Engineer',
-    experience: '3–5 years', type: 'Full-Time', mode: 'On-Site',
-    openings: 2, filled: 0, status: 'On-Hold', priority: 'Medium',
-    qualityScore: 44,
-    skills: ['Kotlin', 'Jetpack Compose', 'MVVM', 'Coroutines', 'Firebase'],
-    location: 'Gurugram', department: 'Engineering',
-    salary: '₹22–32 LPA',
-    pipeline: { applied: 18, shortlisted: 4, offered: 0 },
-    posted: '2026-03-20', deadline: '2026-05-20',
-    description: 'We are hiring an Android Engineer to build delightful, high-performance experiences for Zomato\'s 20M+ daily active users. You will develop features using Kotlin and Jetpack Compose, following an MVVM architecture with Coroutines for async operations and Firebase for analytics and crash reporting. You are expected to take ownership of the full feature lifecycle — from design review and implementation to testing, release, and monitoring. A passion for UI quality, app performance, and writing clean, maintainable code is a must.',
-    accountManager: 'Ananya Rao',
-  },
-  {
-    id: 'JD-00010', company: 'Tata Consultancy Services',
-    designation: 'Scrum Master',
-    experience: '5–8 years', type: 'Full-Time', mode: 'Hybrid',
-    openings: 3, filled: 1, status: 'Partially Filled', priority: 'Normal',
-    qualityScore: 39,
-    skills: ['Agile', 'Scrum', 'JIRA', 'Confluence', 'SAFe'],
-    location: 'Chennai', department: 'Delivery',
-    salary: '₹18–26 LPA',
-    pipeline: { applied: 24, shortlisted: 8, offered: 1 },
-    posted: '2026-04-02', deadline: '2026-06-15',
-    description: 'TCS is seeking an experienced Scrum Master to facilitate agile ceremonies and drive continuous improvement across multiple scrum teams. You will coach teams on agile best practices, remove impediments, and ensure delivery cadence aligns with client commitments. Experience with SAFe at the programme level is a strong advantage. You will maintain JIRA boards, produce sprint metrics, and coordinate dependencies across teams. The ideal candidate is a servant-leader with strong interpersonal skills who can navigate complex client environments and foster a culture of accountability and collaboration.',
-    accountManager: 'Sam Lee',
-  },
-  {
-    id: 'JD-00011', company: 'Amazon',
-    designation: 'Solutions Architect',
-    experience: '8+ years', type: 'Full-Time', mode: 'Hybrid',
-    openings: 1, filled: 0, status: 'Open', priority: 'Urgent',
-    qualityScore: 57,
-    skills: ['AWS', 'Solution Design', 'Networking', 'Security', 'Cost Optimisation'],
-    location: 'Hyderabad', department: 'AWS',
-    salary: '₹50–70 LPA',
-    pipeline: { applied: 11, shortlisted: 3, offered: 0 },
-    posted: '2026-04-20', deadline: '2026-07-31',
-    description: 'Amazon Web Services is looking for a Solutions Architect to guide enterprise customers in adopting AWS services and designing cloud-native architectures that are secure, resilient, and cost-efficient. You will lead technical discovery sessions, produce architecture diagrams and Well-Architected reviews, and present recommendations to C-level stakeholders. Deep expertise across AWS networking, compute, and security services is required. You will also contribute to pre-sales engagements, working alongside account teams to win strategic deals by demonstrating the technical value of AWS solutions.',
-    accountManager: 'Vikram Singh',
-  },
-  {
-    id: 'JD-00012', company: 'Google India',
-    designation: 'Product Manager',
-    experience: '5–8 years', type: 'Full-Time', mode: 'On-Site',
-    openings: 1, filled: 1, status: 'Closed', priority: 'Normal',
-    qualityScore: 49,
-    skills: ['Product Management', 'Data Analysis', 'Roadmapping', 'Stakeholder Mgmt'],
-    location: 'Bengaluru', department: 'Product',
-    salary: '₹45–65 LPA',
-    pipeline: { applied: 20, shortlisted: 6, offered: 1 },
-    posted: '2026-02-10', deadline: '2026-04-10',
-    description: 'Google India is hiring a Product Manager to lead strategy and execution for key consumer products. You will define the product vision, build and maintain a prioritised roadmap, and work cross-functionally with engineering, design, data, and marketing teams to deliver impactful features. Comfort with data-driven decision-making, experience running structured experiments, and strong stakeholder management skills are essential. You will represent the voice of the user in all product decisions and communicate product strategy clearly to both technical teams and executive leadership.',
-    accountManager: 'Rahul Verma',
-  },
-]
+function mapApiJob(jd: any) {
+  const expMin = jd.experienceMinYrs ?? 0
+  const expMax = jd.experienceMaxYrs ?? 0
+  let experience = ''
+  if (expMin > 0 && expMax > 0) experience = expMin === expMax ? `${expMin}+ years` : `${expMin}–${expMax} years`
+  else if (expMin > 0) experience = `${expMin}+ years`
+  else if (expMax > 0) experience = `Up to ${expMax} years`
+
+  let salary = ''
+  if (jd.salaryMin != null && jd.salaryMax != null)
+    salary = `₹${Math.round(jd.salaryMin / 100000)}–${Math.round(jd.salaryMax / 100000)} LPA`
+  else if (jd.salaryMin != null)
+    salary = `₹${Math.round(jd.salaryMin / 100000)}+ LPA`
+  else if (jd.salaryMax != null)
+    salary = `Up to ₹${Math.round(jd.salaryMax / 100000)} LPA`
+
+  return {
+    id: String(jd.id),
+    code: jd.code || String(jd.id),
+    company: jd.company || '',
+    designation: jd.jobTitle || '',
+    experience,
+    type: jd.jobType || 'Full-Time',
+    mode: jd.jobMode || 'On-Site',
+    openings: jd.totalPositions || 1,
+    filled: jd.totalPositionsSelected || 0,
+    status: jd.status || 'Open',
+    priority: 'Normal',
+    qualityScore: 0,
+    skills: jd.requiredSkills || [],
+    goodSkills: jd.goodToHaveSkills || [],
+    location: jd.locationCity || '',
+    department: jd.department || '',
+    salary,
+    pipeline: { applied: 0, shortlisted: 0, offered: 0 },
+    posted: jd.createdOn ? jd.createdOn.slice(0, 10) : '',
+    deadline: '',
+    description: jd.jobDescriptionText || '',
+    accountManager: jd.assignedToUserName || '',
+  }
+}
 
 const EMPTY_JOB = {
-  company: 'Google India', designation: '', experience: '3–5 years',
+  company: '', designation: '', experience: '3–5 years',
   type: 'Full-Time', mode: 'Hybrid', openings: 1, status: 'Open',
-  priority: 'Medium', skills: [], location: 'Bengaluru',
+  priority: 'Medium', skills: [], location: '',
   department: '', salary: '', description: '', accountManager: '',
   qualityScore: 0,
   pipeline: { applied: 0, shortlisted: 0, offered: 0 },
   posted: new Date().toISOString().slice(0,10), deadline: '',
 }
-
-let _nextJobNum = SEED_JOBS.length + 1
-function newJobId() { return `JD-${String(_nextJobNum++).padStart(5,'0')}` }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -333,7 +198,7 @@ function PositionsFill({ filled, openings }) {
 // ── Main Component ────────────────────────────────────────────────────────────
 
 export default function JobsPage({ onReviewModeChange = null, reviewMode = false, onJobViewChange = null, onFindCandidates = null }: { onReviewModeChange?: ((v: boolean) => void) | null, reviewMode?: boolean, onJobViewChange?: ((name: string | null) => void) | null, onFindCandidates?: ((filter: any) => void) | null }) {
-  const [jobs, setJobs]             = useState(SEED_JOBS)
+  const [jobs, setJobs]             = useState<any[]>([])
   const [searchQ, setSearchQ]       = useState('')
   const [filterStatus, setFilter]   = useState('All')
   const [viewMode, setViewMode]     = useState('table') // 'table' | 'grid'
@@ -347,6 +212,8 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
   const [userRole, setUserRole]     = useState<string | null>(null)
   const [parsingModal, setParsingModal] = useState(false)
   const [parsingStep, setParsingStep]   = useState(0) // 0=reading, 1=extracting, 2=scoring, 3=done
+  const [parsedJdData, setParsedJdData] = useState<any>(null)
+  const [uploadError, setUploadError]   = useState('')
   const [reviewJD,    setReviewJD]      = useState(false)
   const [viewJobId,   setViewJobId]     = useState(null)
   const [uploadModal, setUploadModal] = useState(false)
@@ -354,10 +221,14 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
   const [uploadDrag, setUploadDrag]   = useState(false)
   const [uploadTab, setUploadTab]     = useState<'file'|'paste'>('file')
   const [pasteText, setPasteText]     = useState('')
-  const [uploadCompany, setUploadCompany]     = useState('')
-  const [uploadRecruiter, setUploadRecruiter] = useState('')
-  const [uploadPositions, setUploadPositions] = useState('')
-  const [uploadStatus, setUploadStatus]       = useState('draft')
+  const [uploadCompany, setUploadCompany]         = useState('')
+  const [uploadCompanyId, setUploadCompanyId]     = useState('')
+  const [uploadRecruiter, setUploadRecruiter]     = useState('')
+  const [uploadRecruiterId, setUploadRecruiterId] = useState('')
+  const [uploadPositions, setUploadPositions]     = useState('')
+  const [uploadStatus, setUploadStatus]           = useState('Draft')
+  const [clients, setClients]                     = useState<any[]>([])
+  const [companyUsers, setCompanyUsers]           = useState<any[]>([])
   const uploadInputRef = useRef<HTMLInputElement>(null)
   const [page, setPage]             = useState(1)
   const [perPage, setPerPage]       = useState(10)
@@ -375,14 +246,38 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
   }, [parsingModal])
 
   useEffect(() => {
-    if (parsingStep !== 3 || !parsingModal) return
-    const t = setTimeout(() => { setParsingModal(false); setReviewJD(true); onReviewModeChange?.(true) }, 1800)
+    if (parsingStep < 3 || !parsingModal) return
+    if (!parsedJdData && !uploadError) return // still waiting for API
+    const t = setTimeout(() => {
+      if (!uploadError) { setParsingModal(false); setReviewJD(true); onReviewModeChange?.(true) }
+    }, 800)
     return () => clearTimeout(t)
-  }, [parsingStep, parsingModal])
+  }, [parsingStep, parsingModal, parsedJdData, uploadError])
 
   useEffect(() => {
     if (!reviewMode) { setReviewJD(false); setViewJobId(null) }
   }, [reviewMode])
+
+  function loadJobs() {
+    apiFetch('/api/v1/job-descriptions')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.data) {
+          setJobs((data.data as any[]).filter(j => j.status !== 'Cancelled').map(mapApiJob))
+        }
+      })
+      .catch(() => {})
+  }
+
+  useEffect(() => { loadJobs() }, [])
+
+  useEffect(() => {
+    if (!uploadCompanyId) { setCompanyUsers([]); setUploadRecruiter(''); setUploadRecruiterId(''); return }
+    apiFetch(`/api/v1/companies/${uploadCompanyId}/users`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => { if (data?.data) setCompanyUsers(data.data) })
+      .catch(() => {})
+  }, [uploadCompanyId])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -443,11 +338,42 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
   ]
 
   // ── CRUD ─────────────────────────────────────────────────────────────────────
-  function openAdd() { setUploadFiles([]); setUploadModal(true) }
+  function openAdd() {
+    setUploadFiles([])
+    setUploadCompany(''); setUploadCompanyId('')
+    setUploadRecruiter(''); setUploadRecruiterId('')
+    setUploadStatus('Draft')
+    setCompanyUsers([])
+    setUploadModal(true)
+    apiFetch('/api/v1/clients')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => { if (data?.data) setClients(data.data) })
+      .catch(() => {})
+  }
   function openAddForm() {
+    if (!uploadCompanyId) return
     setUploadModal(false)
     setParsingStep(0)
+    setUploadError('')
+    setParsedJdData(null)
     setParsingModal(true)
+
+    const formData = new FormData()
+    formData.append('file', uploadFiles[0])
+    formData.append('companyId', uploadCompanyId)
+    if (uploadPositions) formData.append('totalPositions', uploadPositions)
+    if (uploadRecruiterId) formData.append('assignedToUserId', uploadRecruiterId)
+    if (uploadStatus) formData.append('status', uploadStatus)
+
+    apiFetch('/api/v1/job-descriptions', { method: 'POST', body: formData })
+      .then(r => r.json().then(body => ({ ok: r.ok, body })))
+      .then(({ ok, body }) => {
+        if (!ok) throw new Error(body?.message || 'Parse failed')
+        const jd = body?.data || body
+        setParsedJdData(jd)
+        if (jd?.id) setJobs(js => [...js.filter(j => j.id !== String(jd.id)), mapApiJob(jd)])
+      })
+      .catch(err => setUploadError(err?.message || 'Failed to parse JD. Please try again.'))
   }
   function finishParsing() {
     setParsingModal(false)
@@ -480,10 +406,14 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
     setJobModal(false); setEditJobId(null)
   }
   function deleteJob(id) {
-    setJobs(js => js.filter(j => j.id !== id))
-    setDeleteJobId(null)
-    if (detailId === id) setDetailId(null)
-    if (viewJobId === id) { setViewJobId(null); onJobViewChange?.(null) }
+    apiFetch(`/api/v1/job-descriptions/${id}`, { method: 'DELETE' })
+      .catch(() => {})
+      .finally(() => {
+        setJobs(js => js.filter(j => j.id !== id))
+        setDeleteJobId(null)
+        if (detailId === id) setDetailId(null)
+        if (viewJobId === id) { setViewJobId(null); onJobViewChange?.(null) }
+      })
   }
   function addSkill() {
     const s = skillInput.trim()
@@ -533,12 +463,12 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
         company={uploadCompany}
         fileName={uploadFiles[0]?.name || ''}
         positions={uploadPositions}
+        parsedJd={parsedJdData}
         onBack={() => { setReviewJD(false); onReviewModeChange?.(false) }}
         onPublish={() => {
           setReviewJD(false)
           onReviewModeChange?.(false)
-          setJobForm({ ...EMPTY_JOB, company: uploadCompany || 'Google India' })
-          setEditJobId(null); setJobModal(true); setSkillInput('')
+          loadJobs()
         }}
       />
     )
@@ -668,7 +598,7 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
               )}
               {paginated.map((j, idx) => (
                 <tr key={j.id} className="jb-tr" onClick={() => { setViewJobId(j.id); onJobViewChange?.(j.designation) }}>
-                  <td><span className="jb-id-badge">{j.id}</span></td>
+                  <td><span className="jb-id-badge">{j.code || j.id}</span></td>
                   <td><span className="jb-designation">{j.designation}</span></td>
                   <td>
                     <div className="jb-company-cell">
@@ -725,7 +655,7 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
                 <CompanyAvatar name={j.company} size={36} />
                 <div className="jb-gc-company">
                   <div className="jb-gc-name">{j.company}</div>
-                  <div className="jb-gc-id">{j.id}</div>
+                  <div className="jb-gc-id">{j.code || j.id}</div>
                 </div>
                 <StatusBadge status={j.status} />
               </div>
@@ -810,7 +740,7 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
                 <CompanyAvatar name={detail.company} size={42} />
                 <div>
                   <div className="jb-drawer-title">{detail.designation}</div>
-                  <div className="jb-drawer-sub">{detail.company} · {detail.id}</div>
+                  <div className="jb-drawer-sub">{detail.company} · {detail.code || detail.id}</div>
                 </div>
               </div>
               <div className="jb-drawer-hd-right">
@@ -1035,26 +965,40 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
                 <div className="jb-upload-fields-grid">
                   <div className="jb-upload-field-group">
                     <label className="jb-upload-field-label">Company / Account <span className="jb-req">*</span></label>
-                    <input className="jb-upload-field-input" placeholder="" value={uploadCompany} onChange={e => setUploadCompany(e.target.value)} />
-                    <span className="jb-upload-field-hint">Maps to client_id → clients.</span>
+                    <select className="jb-upload-field-input" value={uploadCompanyId} onChange={e => {
+                      const c = clients.find(c => c.id === e.target.value)
+                      setUploadCompanyId(e.target.value)
+                      setUploadCompany(c?.name || '')
+                    }}>
+                      <option value="">— Select client —</option>
+                      {clients.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                    </select>
                   </div>
                   <div className="jb-upload-field-group">
                     <label className="jb-upload-field-label">Assign to Recruiter</label>
-                    <input className="jb-upload-field-input" placeholder="" value={uploadRecruiter} onChange={e => setUploadRecruiter(e.target.value)} />
-                    <span className="jb-upload-field-hint">Defaults to self</span>
+                    <select className="jb-upload-field-input" value={uploadRecruiterId} disabled={!uploadCompanyId} onChange={e => {
+                      const u = companyUsers.find(u => u.id === e.target.value)
+                      setUploadRecruiterId(e.target.value)
+                      setUploadRecruiter(u ? `${u.firstName} ${u.lastName}` : '')
+                    }}>
+                      <option value="">— Select recruiter —</option>
+                      {companyUsers.map(u => <option key={u.id} value={u.id}>{u.firstName} {u.lastName}</option>)}
+                    </select>
+                    {!uploadCompanyId && <span className="jb-upload-field-hint">Select a company first</span>}
                   </div>
                   <div className="jb-upload-field-group">
-                    <label className="jb-upload-field-label">
-                      Number of Positions
-                      <span className="jb-upload-warn-badge">⚠️ #1</span>
-                    </label>
-                    <input className="jb-upload-field-input" placeholder="e.g. 3" value={uploadPositions} onChange={e => setUploadPositions(e.target.value)} />
-                    <span className="jb-upload-field-hint">total_positions — confirm column exists</span>
+                    <label className="jb-upload-field-label">Number of Positions</label>
+                    <input className="jb-upload-field-input" placeholder="e.g. 3" type="number" min="1" value={uploadPositions} onChange={e => setUploadPositions(e.target.value)} />
                   </div>
                   <div className="jb-upload-field-group">
                     <label className="jb-upload-field-label">Initial Status</label>
-                    <input className="jb-upload-field-input" placeholder="" value={uploadStatus} onChange={e => setUploadStatus(e.target.value)} />
-                    <span className="jb-upload-field-hint">status ENUM — default: draft</span>
+                    <select className="jb-upload-field-input" value={uploadStatus} onChange={e => setUploadStatus(e.target.value)}>
+                      <option value="Draft">Draft</option>
+                      <option value="Open">Open</option>
+                      <option value="On Hold">On Hold</option>
+                      <option value="Closed">Closed</option>
+                      <option value="Cancelled">Cancelled</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -1064,7 +1008,7 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
             <div className="jb-upload-modal-ft">
               <button className="jb-modal-cancel" onClick={() => setUploadModal(false)}>Cancel</button>
               <button className="jb-modal-save jb-parse-btn" onClick={openAddForm}
-                disabled={uploadTab === 'file' ? uploadFiles.length === 0 : pasteText.trim().length === 0}>
+                disabled={!uploadCompanyId || (uploadTab === 'file' ? uploadFiles.length === 0 : pasteText.trim().length === 0)}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
                 </svg>
@@ -1095,10 +1039,10 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
             {/* State pills */}
             <div className="jb-parsing-state-row">
               <span className="jb-parsing-label">STATE:</span>
-              <span className={`jb-parsing-pill jb-parsing-pill-processing${parsingStep < 3 ? ' active' : ''}`}>
-                {parsingStep < 3 ? 'Processing' : 'Done'}
+              <span className={`jb-parsing-pill jb-parsing-pill-processing${!uploadError && !parsedJdData ? ' active' : ''}`}>
+                {parsedJdData ? 'Done' : uploadError ? 'Failed' : 'Processing'}
               </span>
-              <span className="jb-parsing-pill jb-parsing-pill-error">Error</span>
+              {uploadError && <span className="jb-parsing-pill jb-parsing-pill-error active">{uploadError}</span>}
             </div>
 
             {/* Main card */}
@@ -1115,12 +1059,16 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
               </div>
 
               <div className="jb-parsing-title">
-                {parsingStep < 3 ? 'Tvarah AI is reading your JD…' : 'JD parsed successfully!'}
+                {uploadError ? 'Parsing failed' : parsedJdData ? 'JD parsed successfully!' : parsingStep >= 3 ? 'Finalizing…' : 'Tvarah AI is reading your JD…'}
               </div>
               <div className="jb-parsing-subtitle">
-                {parsingStep < 3
-                  ? 'This usually takes 3–5 seconds. Please don\'t close this tab.'
-                  : 'Review and confirm the extracted fields below.'}
+                {uploadError
+                  ? uploadError
+                  : parsedJdData
+                    ? 'Review and confirm the extracted fields below.'
+                    : parsingStep >= 3
+                      ? 'Waiting for AI response…'
+                      : 'This usually takes 5–15 seconds. Please don\'t close this tab.'}
               </div>
 
               {/* Step pills */}
@@ -1155,17 +1103,20 @@ export default function JobsPage({ onReviewModeChange = null, reviewMode = false
               )}
 
               {/* CTA / Links */}
-              {parsingStep === 3 ? (
+              {uploadError ? (
+                <div className="jb-parsing-links">
+                  <button className="jb-parsing-link-ghost" onClick={() => { setParsingModal(false); setUploadModal(true) }}>
+                    ← Go Back &amp; Retry
+                  </button>
+                </div>
+              ) : parsedJdData ? (
                 <button className="jb-parsing-review-btn" onClick={() => { setParsingModal(false); setReviewJD(true); onReviewModeChange?.(true) }}>
                   Review Parsed JD →
                 </button>
               ) : (
                 <div className="jb-parsing-links">
                   <button className="jb-parsing-link-ghost" onClick={() => setParsingModal(false)}>
-                    Cancel / Go Back — JD will be saved as Draft
-                  </button>
-                  <button className="jb-parsing-link-demo" onClick={() => { setParsingModal(false); setReviewJD(true); onReviewModeChange?.(true) }}>
-                    → Demo: skip to Review &amp; Confirm
+                    Cancel
                   </button>
                 </div>
               )}

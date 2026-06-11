@@ -31,11 +31,12 @@ interface Props {
   company:    string
   fileName:   string
   positions:  string
+  parsedJd?:  any
   onBack:     () => void
   onPublish:  () => void
 }
 
-export default function ReviewJDPage({ company, fileName, positions, onBack, onPublish }: Props) {
+export default function ReviewJDPage({ company, fileName, positions, parsedJd, onBack, onPublish }: Props) {
   const [activeState,   setActiveState]   = useState('Default')
   const [publishOpen,   setPublishOpen]   = useState(false)
   const publishRef = useRef<HTMLDivElement>(null)
@@ -49,15 +50,15 @@ export default function ReviewJDPage({ company, fileName, positions, onBack, onP
     document.addEventListener('mousedown', handleClick)
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
-  const [jobTitle,    setJobTitle]    = useState(cleanFileName(fileName) || 'Senior React Developer')
-  const [numPos,      setNumPos]      = useState(positions || '3')
-  const [expMin,      setExpMin]      = useState('4')
-  const [expMax,      setExpMax]      = useState('7')
-  const [salMin,      setSalMin]      = useState('18')
-  const [salMax,      setSalMax]      = useState('28')
+  const [jobTitle,    setJobTitle]    = useState(parsedJd?.jobTitle || cleanFileName(fileName) || 'Senior React Developer')
+  const [numPos,      setNumPos]      = useState(String(parsedJd?.totalPositions || positions || '3'))
+  const [expMin,      setExpMin]      = useState(String(parsedJd?.experienceMinYrs ?? '4'))
+  const [expMax,      setExpMax]      = useState(String(parsedJd?.experienceMaxYrs ?? '7'))
+  const [salMin,      setSalMin]      = useState(String(parsedJd?.salaryMin ?? '18'))
+  const [salMax,      setSalMax]      = useState(String(parsedJd?.salaryMax ?? '28'))
   // Section D state
-  const [mustSkills,       setMustSkills]       = useState(['React','TypeScript','Node.js','Redux','GraphQL'])
-  const [goodSkills,       setGoodSkills]       = useState(['Docker','AWS','Testing'])
+  const [mustSkills,       setMustSkills]       = useState<string[]>(parsedJd?.requiredSkills?.length ? parsedJd.requiredSkills : ['React','TypeScript','Node.js','Redux','GraphQL'])
+  const [goodSkills,       setGoodSkills]       = useState<string[]>(parsedJd?.goodToHaveSkills?.length ? parsedJd.goodToHaveSkills : ['Docker','AWS','Testing'])
   const [targetTypes,      setTargetTypes]      = useState(['SaaS','FinTech','EdTech'])
   const [rules,            setRules]            = useState(['Min 4 yrs React experience','No job-hoppers (< 1yr stays)','Must have led feature releases'])
   const [mustInput,        setMustInput]        = useState('')

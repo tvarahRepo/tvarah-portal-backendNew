@@ -2,6 +2,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useCurrentUser } from '../context/CurrentUserContext'
+import { apiFetch } from '@/lib/apiFetch'
 import './ClientsPage.css'
 
 // ── Config ───────────────────────────────────────────────────────────────────
@@ -13,14 +14,12 @@ const STATUS_CFG = {
 }
 
 const INDUSTRY_CFG = {
-  'Technology':  { bg: '#EEF2FF', text: '#4F46E5' },
-  'IT Services': { bg: '#F0FDFA', text: '#0D9488' },
-  'E-Commerce':  { bg: '#FFF7ED', text: '#C2410C' },
-  'Banking':     { bg: '#EFF6FF', text: '#1D4ED8' },
-  'Food Tech':   { bg: '#FFF1F2', text: '#BE123C' },
-  'Healthcare':  { bg: '#F0FDF4', text: '#15803D' },
-  'Finance':     { bg: '#F5F3FF', text: '#6D28D9' },
-  'Consulting':  { bg: '#FEFCE8', text: '#A16207' },
+  'Information Technology': { bg: '#EEF2FF', text: '#4F46E5' },
+  'E-Commerce':             { bg: '#FFF7ED', text: '#C2410C' },
+  'Banking & Finance':      { bg: '#EFF6FF', text: '#1D4ED8' },
+  'Healthcare':             { bg: '#F0FDF4', text: '#15803D' },
+  'Data & Analytics':       { bg: '#F5F3FF', text: '#6D28D9' },
+  'Manufacturing':          { bg: '#FEFCE8', text: '#A16207' },
 }
 
 
@@ -206,14 +205,16 @@ const SEED_CLIENTS = [
 ]
 
 const EMPTY_CLIENT = {
-  name: '', industry: 'Technology', logo: '', color: '#4285F4',
-  location: '', website: '', contactName: '', contactRole: '',
-  contactEmail: '', contactPhone: '', accountManager: '',
+  name: '', industry: 'Information Technology', logo: '', color: '#4285F4',
+  location: '', website: '', contactName: '', contactRole: 'Client-TA Head',
+  contactEmail: '', contactPhone: '',
   status: 'Active', priority: 'Growth',
   contractStart: '', contractEnd: '',
   activeJobs: 0, candidatesInPipeline: 0, candidatesPlaced: 0,
   openPositions: [], notes: '', params: cloneParams(),
 }
+
+const CLIENT_ROLE_OPTIONS = ['Client-TA Head', 'Client-TA Associate', 'Client-Hiring Manager', 'Client-Director']
 
 const EMPTY_PARAM = {
   name: '', category: 'Experience', condition: '≥ (Min)', threshold: '', active: true,
@@ -413,7 +414,7 @@ export default function ClientsPage({ onClientSelect = null, resetKey = 0 }) {
   const { user } = useCurrentUser()
   const isRecruiter = user?.role?.toLowerCase() === 'recruiter'
 
-  const [clients, setClients]       = useState(SEED_CLIENTS)
+  const [clients, setClients]       = useState([])
   const [searchQ, setSearchQ]       = useState('')
   const [filterStatus, setFilter]   = useState('All')
   const [detailId, setDetailId]     = useState(null)
@@ -425,8 +426,40 @@ export default function ClientsPage({ onClientSelect = null, resetKey = 0 }) {
   const [clientModal, setClientModal] = useState(false)
   const [clientForm, setClientForm]   = useState(EMPTY_CLIENT)
   const [deleteClientId, setDeleteClient] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   const detail = clients.find(c => c.id === detailId)
+
+  useEffect(() => {
+    setLoading(true)
+    apiFetch('/api/v1/clients')
+      .then(r => r.json())
+      .then(body => {
+        if (body?.data) {
+          setClients(body.data.map(c => ({
+            id: c.id,
+            name: c.name,
+            industry: c.industry || 'Information Technology',
+            logo: (c.name || '?').trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase(),
+            color: '#4F46E5',
+            location: [c.headquarterCity, c.headquarterState].filter(Boolean).join(', ') || '—',
+            website: c.companyDomain || '',
+            status: c.status || 'Active',
+            priority: 'Standard',
+            contactName: [c.contactFirstName, c.contactLastName].filter(Boolean).join(' ') || '',
+            contactRole: c.contactRole || '',
+            contactEmail: c.contactEmail || '',
+            contactPhone: c.contactPhone || '',
+            logoUrl: c.logoUrl || null,
+            activeJobs: 0, candidatesInPipeline: 0, candidatesPlaced: 0,
+            openPositions: [], notes: '',
+            params: cloneParams(),
+          })))
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [])
 
   useEffect(() => { if (resetKey > 0) setDetailId(null) }, [resetKey])
 
@@ -439,7 +472,7 @@ export default function ClientsPage({ onClientSelect = null, resetKey = 0 }) {
   const filtered = clients.filter(c => {
     const okStatus = filterStatus === 'All' || c.status === filterStatus
     const q = searchQ.toLowerCase()
-    const okSearch = !q || [c.name, c.industry, c.contactName, c.accountManager, c.location]
+    const okSearch = !q || [c.name, c.industry, c.contactName, c.location]
       .some(s => s.toLowerCase().includes(q))
     return okStatus && okSearch
   })
@@ -454,9 +487,48 @@ export default function ClientsPage({ onClientSelect = null, resetKey = 0 }) {
 
   // ── Client CRUD ──────────────────────────────────────────────────────────────
   function openAddClient() { setClientForm({ ...EMPTY_CLIENT, params: cloneParams() }); setClientModal(true) }
-  function saveClient() {
+  async function saveClient() {
     if (!clientForm.name.trim()) return
-    setClients(cs => [...cs, { ...clientForm, id: newClientId() }])
+    const [city, state] = (clientForm.location || '').split(',').map(s => s.trim())
+    try {
+      const res = await apiFetch('/api/v1/clients', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: clientForm.name,
+          industry: clientForm.industry,
+          headquarterCity: city || clientForm.location,
+          headquarterState: state || '',
+          companyDomain: clientForm.website,
+          status: clientForm.status,
+          contactName: clientForm.contactName,
+          contactRole: clientForm.contactRole,
+          contactEmail: clientForm.contactEmail,
+          contactPhone: clientForm.contactPhone,
+        }),
+      })
+      const body = await res.json()
+      if (res.ok && body?.data) {
+        const c = body.data
+        setClients(cs => [...cs, {
+          id: c.id,
+          name: c.name,
+          industry: c.industry || 'Technology',
+          logo: (c.name || '?').trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase(),
+          color: clientForm.color,
+          location: [c.headquarterCity, c.headquarterState].filter(Boolean).join(', ') || clientForm.location,
+          website: c.companyDomain || '',
+          status: c.status || 'Active',
+          priority: clientForm.priority,
+          contactName: clientForm.contactName, contactRole: clientForm.contactRole,
+          contactEmail: clientForm.contactEmail, contactPhone: clientForm.contactPhone,
+          logoUrl: c.logoUrl || null,
+          activeJobs: 0, candidatesInPipeline: 0, candidatesPlaced: 0,
+          openPositions: [], notes: clientForm.notes,
+          params: cloneParams(),
+        }])
+      }
+    } catch (_) {}
     setClientModal(false)
   }
   function selectClient(id) {
@@ -610,18 +682,6 @@ export default function ClientsPage({ onClientSelect = null, resetKey = 0 }) {
                         {detail.contactPhone}
                       </span>
                     </div>
-                  </div>
-                </div>
-
-                <div className="clt-meta-sep" />
-
-                <div className="clt-meta-item">
-                  <svg className="clt-meta-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                  </svg>
-                  <div className="clt-meta-body">
-                    <span className="clt-meta-label">Account Manager</span>
-                    <span className="clt-meta-value">{detail.accountManager}</span>
                   </div>
                 </div>
 
@@ -967,7 +1027,7 @@ export default function ClientsPage({ onClientSelect = null, resetKey = 0 }) {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round">
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
-            <input className="clt-search" placeholder="Search client, industry, manager..."
+            <input className="clt-search" placeholder="Search client, industry, contact..."
               value={searchQ} onChange={e => setSearchQ(e.target.value)} />
             {searchQ && (
               <button className="clt-search-clear" onClick={() => setSearchQ('')}>
@@ -999,7 +1059,6 @@ export default function ClientsPage({ onClientSelect = null, resetKey = 0 }) {
               <th>CLIENT</th>
               <th>INDUSTRY</th>
               <th>CONTACT</th>
-              <th>ACCOUNT MGR</th>
               <th>OPEN JOBS</th>
               <th>PIPELINE</th>
               <th>PLACED</th>
@@ -1008,7 +1067,15 @@ export default function ClientsPage({ onClientSelect = null, resetKey = 0 }) {
             </tr>
           </thead>
           <tbody>
-            {filtered.length === 0 && (
+            {loading && (
+              <tr><td colSpan={9} className="clt-empty-row">
+                <div className="clt-empty">
+                  <div className="clt-loader" />
+                  <p style={{color:'#9CA3AF',marginTop:12}}>Loading clients…</p>
+                </div>
+              </td></tr>
+            )}
+            {!loading && filtered.length === 0 && (
               <tr><td colSpan={9} className="clt-empty-row">
                 <div className="clt-empty">
                   <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
@@ -1040,12 +1107,6 @@ export default function ClientsPage({ onClientSelect = null, resetKey = 0 }) {
                   <div className="clt-contact-cell">
                     <div className="clt-contact-name">{c.contactName}</div>
                     <div className="clt-contact-role">{c.contactRole}</div>
-                  </div>
-                </td>
-                <td>
-                  <div className="clt-mgr-cell">
-                    <span className="clt-mgr-avatar">{c.accountManager.split(' ').map(w=>w[0]).join('').slice(0,2)}</span>
-                    <span className="clt-mgr-name">{c.accountManager}</span>
                   </div>
                 </td>
                 <td><span className="clt-num clt-num-jobs">{c.activeJobs}</span></td>
@@ -1121,10 +1182,9 @@ export default function ClientsPage({ onClientSelect = null, resetKey = 0 }) {
                 [{ label:'Website', field:'website', placeholder:'e.g. company.com', half:true },
                  { label:'Status', field:'status', type:'select', options:STATUS_OPTIONS, half:true }],
                 [{ label:'Contact Person Name', field:'contactName', placeholder:'e.g. Ravi Sharma', half:true },
-                 { label:'Contact Role', field:'contactRole', placeholder:'e.g. HR Manager', half:true }],
+                 { label:'Contact Role', field:'contactRole', type:'select', options:CLIENT_ROLE_OPTIONS, half:true }],
                 [{ label:'Contact Email', field:'contactEmail', placeholder:'e.g. hr@company.com', half:true },
                  { label:'Contact Phone', field:'contactPhone', placeholder:'e.g. +91 9XXXXXXXXX', half:true }],
-                [{ label:'Account Manager', field:'accountManager', placeholder:'Recruiter managing this account', half:false }],
                 [{ label:'Notes', field:'notes', type:'textarea', placeholder:'Internal notes about this client...', half:false }],
               ].map((row, ri) => (
                 <div key={ri} className="clt-mf-row">
